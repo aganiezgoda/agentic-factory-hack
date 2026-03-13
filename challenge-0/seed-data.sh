@@ -56,9 +56,13 @@ def setup_cosmos_db():
     """Set up Cosmos DB database and containers"""
     print("📦 Setting up Cosmos DB...")
     
-    # Initialize Cosmos client using AAD auth (local key auth is disabled)
-    credential = DefaultAzureCredential()
-    cosmos_client = CosmosClient(os.environ['COSMOS_ENDPOINT'], credential=credential)
+    # Initialize Cosmos client - use key auth if available, otherwise fall back to AAD
+    cosmos_key = os.environ.get('COSMOS_KEY')
+    if cosmos_key:
+        cosmos_client = CosmosClient(os.environ['COSMOS_ENDPOINT'], credential=cosmos_key)
+    else:
+        credential = DefaultAzureCredential()
+        cosmos_client = CosmosClient(os.environ['COSMOS_ENDPOINT'], credential=credential)
     
     # Create database
     database_name = "FactoryOpsDB"

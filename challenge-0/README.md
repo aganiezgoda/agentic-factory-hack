@@ -207,7 +207,7 @@ az provider register --namespace Microsoft.AlertsManagement
 cd challenge-0
 
 # Make resource group name easy to identify. Use your initials or other identifier (e.g., "jd" for John Doe)
-export RG_SUFFIX="<initials>"
+export RG_SUFFIX="AN11"
 
 # Set variables with your initials as suffix
 export RESOURCE_GROUP="rg-tire-factory-hack-${RG_SUFFIX}"
@@ -215,6 +215,7 @@ export LOCATION="swedencentral"
 
 # Create resource group
 az group create --name $RESOURCE_GROUP --location $LOCATION
+az group create --name $RESOURCE_GROUP --location $LOCATION --tags SecurityControl=Ignore SecurityExemption=StorageAccountKeyAccess
 
 # Deploy infrastructure
 az deployment group create \
